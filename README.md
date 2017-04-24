@@ -10,7 +10,7 @@ PJLink Class1 specifications are available here:
 (c) 2017 SysCo systemes de communication sa
 http://developer.sysco.ch/php/
 
-Current build: 1.0.0.1 (2017.04.24)
+Current build: 1.0.0.1 (2017-04-24)
 
 No external file is needed (no PEAR, no PECL, no cURL).
 
