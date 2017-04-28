@@ -43,6 +43,7 @@ No external file is needed (no PEAR, no PECL, no cURL).
   The error message can be detailed by calling the getError() method.
 
   Public methods available:
+```
    setDevice($host, [[[$password], $timeout], $port])
    powerOn([[[[$host], $password], $timeout], $port])
    powerOff([[[[$host], $password], $timeout], $port])
@@ -60,11 +61,12 @@ No external file is needed (no PEAR, no PECL, no cURL).
    getErrorNumber()
    getResponseRaw()
    getResponseText()
-
+```
 
 # Examples
 
   // Example 1
+```
   require_once('pjlink.class.php');
   $pjlink = new PJLink();
   if (false === $pjlink->powerOn("192.168.0.1")) {
@@ -72,8 +74,10 @@ No external file is needed (no PEAR, no PECL, no cURL).
   } elseif (false === $pjlink->setInput(11, "192.168.0.1")) {
     echo $pjlink->getError();
   }
+```
 
   // Example 2
+```
   require_once('pjlink.class.php');
   $pjlink = new PJLink();
   $pjlink->setDevice("192.168.0.1", "my_pjlink_pass", 10, 4352);
@@ -83,7 +87,7 @@ No external file is needed (no PEAR, no PECL, no cURL).
     echo $pjlink->getError();
   }
   echo "Device: ".$pjlink->getManufactureName().", ".$pjlink->getProductName()."<br />\n";
-
+```
 
 You can support our open source projects with donations and sponsoring.
 Sponsorships are crucial for ongoing and future development!
