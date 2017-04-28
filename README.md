@@ -96,6 +96,6 @@ is always welcome even if it's as low as $1!
 You can also sponsor the development of a specific feature. Please contact
 us in order to discuss the detail of the implementation.
 
-**[Donate via PayPal by clicking here** ![Donate via PayPal](https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=N56M9E2SEAUD4)
+[Donate via PayPal by clicking here ![Donate via PayPal](https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=N56M9E2SEAUD4)
 
 And for more PHP classes, have a look on [PHPclasses.org](http://syscoal.users.phpclasses.org/browse/), where a lot of authors are sharing their classes for free.
