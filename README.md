@@ -1,20 +1,34 @@
-Pure PHP PJLink Class1 library
-==============================
+Pure PHP PJLink library
+=======================
 
-The PJLink PHP class is the lightest pure PHP package available for
-operating and controlling data projectors using the PJLink Class1 standard.
+The PJLink PHP class is the lightest pure PHP package available for operating
+and controlling data projectors using the PJLink Class1 and Class 2 standard.
 
 PJLink Class1 specifications are available here:
   http://pjlink.jbmia.or.jp/english/data/5-1_PJLink_eng_20131210.pdf
 
+PJLink Class2 specifications are available here:
+  http://pjlink.jbmia.or.jp/english/data_cl2/PJLink_5-1.pdf
+
+PJLink test software is available gere:
+  http://pjlink.jbmia.or.jp/english/data_cl2/PJLink_5-2.zip
+
 (c) 2017 SysCo systemes de communication sa
 http://developer.sysco.ch/php/
 
-Current build: 1.0.0.1 (2017-04-24)
+Current build: 2.0.0.0 (2017-09-05)
 
 No external file is needed (no PEAR, no PECL, no cURL).
 
 
+# Change Log
+```
+2017-09-05 2.0.0.0 SysCo/al First public Class2 support
+2017-04-24 1.0.0.1 SysCo/al First public version
+2017-04-23 1.0.0.0 SysCo/al Initial implementation
+```
+ 
+ 
 # Licence
 
   Copyright (c) 2017 SysCo systemes de communication sa
@@ -44,23 +58,48 @@ No external file is needed (no PEAR, no PECL, no cURL).
 
   Public methods available:
 ```
+  # Class1/2 functions
+   setClassLevel([$class_level])
+   getClassLevel()
+   getError()
+   getErrorNumber()
+   getResponseRaw()
+   getResponseText()
    setDevice($host, [[[$password], $timeout], $port])
    powerOn([[[[$host], $password], $timeout], $port])
    powerOff([[[[$host], $password], $timeout], $port])
    getPowerState([[[[$host], $password], $timeout], $port])
    setInput($input, [[[[$host], $password], $timeout], $port])
    getInput([[[[$host], $password], $timeout], $port])
+   muteVideoOn([[[[$host], $password], $timeout], $port])
+   muteVideoOff([[[[$host], $password], $timeout], $port])
+   muteAudioOn([[[[$host], $password], $timeout], $port])
+   muteAudioOff([[[[$host], $password], $timeout], $port])
+   muteVideoAudioOn([[[[$host], $password], $timeout], $port])
+   muteVideoAudioOff([[[[$host], $password], $timeout], $port])
+   getMuteState([[[[$host], $password], $timeout], $port])
    getErrorState([[[[$host], $password], $timeout], $port])
    getLampState([[[[$host], $password], $timeout], $port])
+   getInputList([[[[$host], $password], $timeout], $port])
    getName([[[[$host], $password], $timeout], $port])
    getManufactureName([[[[$host], $password], $timeout], $port])
    getProductName([[[[$host], $password], $timeout], $port])
    getOtherInfo([[[[$host], $password], $timeout], $port])
    getClass([[[[$host], $password], $timeout], $port])
-   getError()
-   getErrorNumber()
-   getResponseRaw()
-   getResponseText()
+  # Class2 only functions
+   getSerialNumber([[[[$host], $password], $timeout], $port])
+   getSoftwareVersion([[[[$host], $password], $timeout], $port])
+   getInputTerminalName($input, [[[[$host], $password], $timeout], $port])
+   getInputResolution([[[[$host], $password], $timeout], $port])
+   getRecommendedResolution([[[[$host], $password], $timeout], $port])
+   getFilterUsage([[[[$host], $password], $timeout], $port])
+   getLampReplacementModel([[[[$host], $password], $timeout], $port])
+   getFilterReplacementModel([[[[$host], $password], $timeout], $port])
+   setSpeakerVolume($volume, [[[[$host], $password], $timeout], $port])
+   setMicrophoneVolume($volume, [[[[$host], $password], $timeout], $port])
+   freezeOn([[[[$host], $password], $timeout], $port])
+   freezeOff([[[[$host], $password], $timeout], $port])
+   getFreezeState([[[[$host], $password], $timeout], $port])
 ```
 
 # Examples
@@ -79,7 +118,7 @@ No external file is needed (no PEAR, no PECL, no cURL).
   // Example 2
 ```
   require_once('pjlink.class.php');
-  $pjlink = new PJLink();
+  $pjlink = new PJLink(1);
   $pjlink->setDevice("192.168.0.1", "my_pjlink_pass", 10, 4352);
   if (false === $pjlink->powerOn()) {
     echo $pjlink->getError();
@@ -88,6 +127,24 @@ No external file is needed (no PEAR, no PECL, no cURL).
   }
   echo "Device: ".$pjlink->getManufactureName().", ".$pjlink->getProductName()."<br />\n";
 ```
+
+  // Example 3
+```
+  require_once('pjlink.class.php');
+  $pjlink = new PJLink(2);
+  $pjlink->setDevice("192.168.0.2", "my_pjlink_pass", 10, 4352);
+  if (false === $pjlink->powerOn()) {
+    echo $pjlink->getError();
+  } elseif (false === $pjlink->setInput(11)) {
+    echo $pjlink->getError();
+  }
+  echo "Device: ".$pjlink->getManufactureName().", ".$pjlink->getProductName()."<br />\n";
+  $pjlink->setClassLevel(1);
+  $pjlink->powerOn("192.168.0.1");
+```
+
+The test.class.php file will test all methods of the class.
+It can be used with the PJLink test software.
 
 You can support our open source projects with donations and sponsoring.
 Sponsorships are crucial for ongoing and future development!
