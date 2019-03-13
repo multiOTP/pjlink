@@ -26,17 +26,17 @@
  * PHP 5.3.0 or higher is supported.
  *
  * @author    Andre Liechti, SysCo systemes de communication sa, <developer@sysco.ch>
- * @version   2.0.0.0
- * @date      2017-09-05
+ * @version   2.0.0.2
+ * @date      2019-03-13
  * @since     2017-04-23
- * @copyright (c) 2017 SysCo systemes de communication sa
+ * @copyright (c) 2017-2019 SysCo systemes de communication sa
  * @copyright GNU Lesser General Public License
  *
  *//*
  *
  * LICENCE
  *
- *   Copyright (c) 2017 SysCo systemes de communication sa
+ *   Copyright (c) 2017-2019 SysCo systemes de communication sa
  *   SysCo (tm) is a trademark of SysCo systemes de communication sa
  *   (http://www.sysco.ch/)
  *   All rights reserved.
@@ -158,6 +158,9 @@
  *
  * Users feedbacks and comments
  *
+ * 2019-03-10 tomatow
+ *   Patch bad specifications implementation, accept lower case response
+ *
  * 2017-08-07 Benjamin (DE)
  *   Question about Class 2 support availability
  *
@@ -167,6 +170,7 @@
  *
  * Change Log
  *
+ *   2019-03-13 2.0.0.2 tomatow Lower case response are now accepted
  *   2017-09-05 2.0.0.0 SysCo/al First public Class2 support
  *   2017-04-24 1.0.0.1 SysCo/al First public version
  *   2017-04-23 1.0.0.0 SysCo/al Initial implementation

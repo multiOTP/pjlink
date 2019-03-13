@@ -13,16 +13,17 @@ PJLink Class2 specifications are available here:
 PJLink test software is available gere:
   http://pjlink.jbmia.or.jp/english/data_cl2/PJLink_5-2.zip
 
-(c) 2017 SysCo systemes de communication sa
+(c) 2017-2019 SysCo systemes de communication sa
 http://developer.sysco.ch/php/
 
-Current build: 2.0.0.0 (2017-09-05)
+Current build: 2.0.0.2 (2019-03-13)
 
 No external file is needed (no PEAR, no PECL, no cURL).
 
 
 # Change Log
 ```
+2019-03-13 2.0.0.2 tomatow Lower case response are now accepted
 2017-09-05 2.0.0.0 SysCo/al First public Class2 support
 2017-04-24 1.0.0.1 SysCo/al First public version
 2017-04-23 1.0.0.0 SysCo/al Initial implementation
@@ -31,7 +32,7 @@ No external file is needed (no PEAR, no PECL, no cURL).
  
 # Licence
 
-  Copyright (c) 2017 SysCo systemes de communication sa
+  Copyright (c) 2017-2019 SysCo systemes de communication sa
   SysCo (tm) is a trademark of SysCo systemes de communication sa
   (http://www.sysco.ch/)
   All rights reserved.
