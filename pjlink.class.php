@@ -304,7 +304,7 @@ class PJLink
 
 		stream_set_timeout($this->socket, $this->timeout, 0);
 
-		$response = $this->getResponse();
+		$response = strtoupper($this->getResponse());
 
 		if (FALSE !== strpos($response, "PJLINK 0")) {
 			$this->prefix_hash = "";
