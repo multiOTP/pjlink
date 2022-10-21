@@ -26,8 +26,8 @@
  * PHP 5.3.0 or higher is supported.
  *
  * @author    Andre Liechti, SysCo systemes de communication sa, <developer@sysco.ch>
- * @version   2.0.0.2
- * @date      2019-03-13
+ * @version   2.0.1.0
+ * @date      2022-10-21
  * @since     2017-04-23
  * @copyright (c) 2017-2019 SysCo systemes de communication sa
  * @copyright GNU Lesser General Public License
@@ -36,7 +36,7 @@
  *
  * LICENCE
  *
- *   Copyright (c) 2017-2019 SysCo systemes de communication sa
+ *   Copyright (c) 2017-2022 SysCo systemes de communication sa
  *   SysCo (tm) is a trademark of SysCo systemes de communication sa
  *   (http://www.sysco.ch/)
  *   All rights reserved.
@@ -170,7 +170,8 @@
  *
  * Change Log
  *
- *   2019-03-13 2.0.0.2 tomatow Lower case response are now accepted
+ *   2022-10-21 2.0.1.0 SysCo/al Full support of upper and lower case response, also for handling authentication
+ *   2019-03-13 2.0.0.2 tomatow  Lower case response are now accepted
  *   2017-09-05 2.0.0.0 SysCo/al First public Class2 support
  *   2017-04-24 1.0.0.1 SysCo/al First public version
  *   2017-04-23 1.0.0.0 SysCo/al Initial implementation
@@ -308,13 +309,13 @@ class PJLink
 
 		stream_set_timeout($this->socket, $this->timeout, 0);
 
-		$response = strtoupper($this->getResponse());
+		$response = $this->getResponse();
 
-		if (FALSE !== strpos($response, "PJLINK 0")) {
+		if (FALSE !== stripos($response, "PJLINK 0")) {
 			$this->prefix_hash = "";
 			return true;
-		} elseif (FALSE !== strpos($response, "PJLINK 1")) {
-			$auth_random = trim(substr($response, strpos($response, "PJLINK 1") + 9));
+		} elseif (FALSE !== stripos($response, "PJLINK 1")) {
+			$auth_random = trim(substr($response, stripos($response, "PJLINK 1") + 9));
 			$this->prefix_hash = md5($auth_random . $this->password);
 			return true;
 		} else {
@@ -348,13 +349,13 @@ class PJLink
 
 		$response = $this->getResponse();
 
-		if (FALSE !== strpos($response, "PJLINK ERRA")) {
+		if (FALSE !== stripos($response, "PJLINK ERRA")) {
 			$this->error = "Authentication failed";
 			$this->error_number = PJLINK_AUTH_ERROR;
 			return false;
-		} elseif (FALSE !== strpos($response, PJLINK_PREFIX)) {
-			$result = trim(substr($response, strpos($response, "=") + 1));
-			if (0 === strpos($result, "ERR")) {
+		} elseif (FALSE !== stripos($response, PJLINK_PREFIX)) {
+			$result = trim(substr($response, stripos($response, "=") + 1));
+			if (0 === stripos($result, "ERR")) {
 				$this->response_text = $result;
 				return false;
 			} else {
@@ -424,12 +425,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR2':
 						$this->response_text = "out-of-parameter";
 					  break;
@@ -460,12 +461,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR2':
 						$this->response_text = "out-of-parameter";
 					  break;
@@ -496,7 +497,7 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case '0':
 						$this->response_text = "off";
 					  break;
@@ -513,7 +514,7 @@ class PJLink
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -542,12 +543,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR2':
 						$this->response_text = "nonexistent";
 					  break;
@@ -578,12 +579,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -612,12 +613,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR2':
 						$this->response_text = "out-of-parameter";
 					  break;
@@ -708,7 +709,7 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case '11':
 						$this->response_text = "video-mute-on";
 					  break;
@@ -725,7 +726,7 @@ class PJLink
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -773,7 +774,7 @@ class PJLink
 					$this->response_text.= ($this->response_text != "" ? ", " : "") . "OTHER: " . ((substr($result, 5, 1) == "1") ? "WARNING" : "ERROR");
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -818,7 +819,7 @@ class PJLink
 				}
 				$this->response_text = $result_text;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR1':
 						$this->response_text = "no-lamp";
 					  break;
@@ -849,12 +850,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR2':
 						$this->response_text = "out-of-parameter";
 					  break;
@@ -887,7 +888,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -916,7 +917,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -946,7 +947,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -976,7 +977,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -1009,7 +1010,7 @@ class PJLink
         	$this->setClassLevel(intval($result));
         }
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -1039,7 +1040,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -1069,7 +1070,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -1100,7 +1101,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR2':
 						$this->response_text = "out-of-parameter";
 					  break;
@@ -1133,7 +1134,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case '-':
 						$this->response_text = "no-signal";
 					  break;
@@ -1169,7 +1170,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR3':
 						$this->response_text = "unavailable";
 					  break;
@@ -1199,7 +1200,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR1':
 						$this->response_text = "no-filter";
 					  break;
@@ -1232,7 +1233,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case '':
 						$this->response_text = "no-replacement-model-number";
 					  break;
@@ -1265,7 +1266,7 @@ class PJLink
 			if (false !== $result) {
 				$this->response_text = $result;
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case '':
 						$this->response_text = "no-replacement-model-number";
 					  break;
@@ -1297,12 +1298,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR1':
 						$this->response_text = "no-speaker";
 					  break;
@@ -1337,12 +1338,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR1':
 						$this->response_text = "no-microphone";
 					  break;
@@ -1376,12 +1377,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR1':
 						$this->response_text = "not-supported";
 					  break;
@@ -1415,12 +1416,12 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 				  default:
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR1':
 						$this->response_text = "not-supported";
 					  break;
@@ -1454,7 +1455,7 @@ class PJLink
 		if ($this->open($host, $password, $timeout, $port)) {
 			$result = $this->sendCommand($command);
 			if (false !== $result) {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case '0':
 						$this->response_text = "unfreezed";
 					  break;
@@ -1465,7 +1466,7 @@ class PJLink
 						$this->response_text = $result;
 				}
 			} else {
-				switch ($result) {
+				switch (strtoupper($result)) {
 					case 'ERR1':
 						$this->response_text = "not-supported";
 					  break;

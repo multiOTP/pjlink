@@ -6,7 +6,7 @@
   require_once('pjlink.class.php');
   
   $host = "127.0.0.1";
-  $password = "JBMIAProjectorLink":
+  $password = "JBMIAProjectorLink";
   $wait = 10;
   $input = 22;
   
